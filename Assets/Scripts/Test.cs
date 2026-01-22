@@ -1,47 +1,47 @@
 using UnityEngine;
 
-public class FirstScript : MonoBehaviour
+public class Test : MonoBehaviour
 {
-    public float speed = 0.01f;
+    public float speed = 0.02f;
+    public float xMax;
+    public float xMin;
+    public Camera gameCamera;
 
-    Vector2 bottomLeft;
-    Vector2 topRight;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        bottomLeft = Camera.main.ScreenToWorldPoint(Vector2.zero);
-        topRight = Camera.main.ScreenToWorldPoint(new Vector2(Screen.width, Screen.height));
-        //speed = Random.Range(0.01f, 0.3f);
-        transform.position = (Vector2)transform.position + Random.insideUnitCircle * 2;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Moves the square
-        Vector3 newPosition = transform.position;
-        newPosition.x += speed * Time.deltaTime;
+        Vector3 moverXPos = transform.position;
+        moverXPos.x += speed * Time.deltaTime;
 
-        //Checks if square reaches the ends of the screen
-        Vector2 screenPos = Camera.main.WorldToScreenPoint(transform.position);
+        transform.position = moverXPos;
 
-        //Left edge
-        if (screenPos.x < 0)
+        //Screen.width;
+        //gameCamera.WorldToScreenPoint(//somerandomvector);
+
+        //set xMax to wherever is too far to the right for the player to see
+        Vector3 screenTransformPosition = gameCamera.WorldToScreenPoint(transform.position);
+        xMax = Screen.width;
+
+        //set xMin to wherever is too far to the left for the player to see
+        xMin = 0;
+
+
+        if (xMax < screenTransformPosition.x)
         {
-            newPosition.x = bottomLeft.x;
-
             speed *= -1;
         }
 
-        //Right edge
-        if (screenPos.x > Screen.width)
+        if (xMin > screenTransformPosition.x)
         {
-            newPosition.x = topRight.x;
-
             speed *= -1;
         }
 
-        transform.position = newPosition;
     }
 }
