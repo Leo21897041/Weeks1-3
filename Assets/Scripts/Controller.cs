@@ -30,7 +30,7 @@ public class Controller : MonoBehaviour
         Vector3 worldMousePosition = Camera.main.ScreenToWorldPoint(currentMousePosition);
         worldMousePosition.z = 0;
 
-        bool isLeftMousePressed = Mouse.current.leftButton.isPressed;
+        bool isLeftMousePressed = Mouse.current.leftButton.wasPressedThisFrame;
         if (isLeftMousePressed)
         {
             //find any renders that are currently hovered over
@@ -51,104 +51,101 @@ public class Controller : MonoBehaviour
         {
             Transform currentTransform = controlledTransforms[i];
 
-            bool leftArrowHeld = Keyboard.current.leftArrowKey.isPressed;
-            bool rightArrowHeld = Keyboard.current.rightArrowKey.isPressed;
-            bool upArrowHeld = Keyboard.current.upArrowKey.isPressed;
-            bool downArrowHeld = Keyboard.current.downArrowKey.isPressed;
+            bool wIsHeld = Keyboard.current.wKey.isPressed;
+            bool aIsHeld = Keyboard.current.aKey.isPressed;
+            bool sIsHeld = Keyboard.current.sKey.isPressed;
+            bool dIsHeld = Keyboard.current.dKey.isPressed;
 
-            if (leftArrowHeld)
+            if (aIsHeld)
             {
-                currentTransform.eulerAngles = transform.forward * rotateSpeed * Time.deltaTime;
-                currentTransform.position = -transform.forward * moveSpeed * Time.deltaTime;
+                currentTransform.eulerAngles -= currentTransform.forward * rotateSpeed * Time.deltaTime;
             }
 
-            if (rightArrowHeld)
+            if (dIsHeld)
             {
-                currentTransform.eulerAngles = transform.forward * rotateSpeed * Time.deltaTime;
-                currentTransform.position = transform.forward * moveSpeed * Time.deltaTime;
+                currentTransform.eulerAngles += currentTransform.forward * rotateSpeed * Time.deltaTime;
             }
 
-            if (upArrowHeld)
+            if (wIsHeld)
             {
-                currentTransform.eulerAngles = transform.forward * rotateSpeed * Time.deltaTime;
-                currentTransform.position = transform.forward * moveSpeed * Time.deltaTime;
+                currentTransform.position += currentTransform.up * rotateSpeed * Time.deltaTime;
             }
 
-            if (downArrowHeld)
+            if (sIsHeld)
             {
-                currentTransform.eulerAngles = transform.forward * rotateSpeed * Time.deltaTime;
-                currentTransform.position = -transform.forward * moveSpeed * Time.deltaTime;
+                currentTransform.position -= currentTransform.up * rotateSpeed * Time.deltaTime;
             }
         }
 
         //leftButton and rightButton do the same thing
-        bool leftIsHeld = Mouse.current.leftButton.isPressed;
+        //bool leftIsHeld = Mouse.current.leftButton.isPressed;
 
-        if (leftIsHeld)
-        {
-            Debug.Log("Left mouse is held");
-        }
+        //if (leftIsHeld)
+        //{
+        //    Debug.Log("Left mouse is held");
+        //}
 
-        bool leftIsPressed = Mouse.current.leftButton.wasPressedThisFrame;
-        if (leftIsPressed)
-        {
-            Debug.Log("Left mouse is pressed");
-        }
+        //bool leftIsPressed = Mouse.current.leftButton.wasPressedThisFrame;
+        //if (leftIsPressed)
+        //{
+        //    Debug.Log("Left mouse is pressed");
+        //}
 
-        bool leftIsReleased = Mouse.current.leftButton.wasReleasedThisFrame;
-        if (leftIsReleased)
-        {
-            Debug.Log("Left mouse is released");
-        }
+        //bool leftIsReleased = Mouse.current.leftButton.wasReleasedThisFrame;
+        //if (leftIsReleased)
+        //{
+        //    Debug.Log("Left mouse is released");
+        //}
 
-        //MINE
-        //Vector3 currentPosition = 
-        bool wIsPressed = Keyboard.current.wKey.isPressed;
-        if (wIsPressed)
-        {
-            currentRotation.x += Time.deltaTime * rotateSpeed;
-            transform.eulerAngles = currentRotation;
+        ////MINE
+        //Vector3 currentPosition = transform.position;
+        //Vector3 currentRotation = transform.eulerAngles;
 
-            currentPosition.y += Time.deltaTime * moveSpeed;
-            transform.position = currentPosition;
+        //bool wIsPressed = Keyboard.current.wKey.isPressed;
+        //bool aIsPressed = Keyboard.current.aKey.isPressed;
+        //bool sIsPressed = Keyboard.current.sKey.isPressed;
+        //bool dIsPressed = Keyboard.current.dKey.isPressed;
 
-            Debug.Log("w is pressed");
-        }
-        bool aIsPressed = Keyboard.current.aKey.isPressed;
-        if (aIsPressed)
-        {
-            currentRotation.z -= Time.deltaTime * rotateSpeed;
-            transform.eulerAngles = currentRotation;
+        //if (wIsPressed)
+        //{
+        //    currentRotation.x += Time.deltaTime * rotateSpeed;
+        //    transform.eulerAngles = currentRotation;
 
-            currentPosition.x -= Time.deltaTime * moveSpeed;
-            transform.position = currentPosition;
+        //    currentPosition.y += Time.deltaTime * moveSpeed;
+        //    transform.position = currentPosition;
 
-            Debug.Log("a is pressed");
-        }
+        //    Debug.Log("w is pressed");
+        //}
+        //if (aIsPressed)
+        //{
+        //    currentRotation.z += Time.deltaTime * rotateSpeed;
+        //    transform.eulerAngles = currentRotation;
 
-        bool sIsPressed = Keyboard.current.sKey.isPressed;
-        if (sIsPressed)
-        {
-            currentRotation.x -= Time.deltaTime * rotateSpeed;
-            transform.eulerAngles = currentRotation;
+        //    currentPosition.x -= Time.deltaTime * moveSpeed;
+        //    transform.position = currentPosition;
 
-            currentPosition.y -= Time.deltaTime * moveSpeed;
-            transform.position = currentPosition;
+        //    Debug.Log("a is pressed");
+        //}
+        //if (sIsPressed)
+        //{
+        //    currentRotation.x -= Time.deltaTime * rotateSpeed;
+        //    transform.eulerAngles = currentRotation;
 
-            Debug.Log("s is pressed");
-        }
+        //    currentPosition.y -= Time.deltaTime * moveSpeed;
+        //    transform.position = currentPosition;
 
-        bool dIsPressed = Keyboard.current.dKey.isPressed;
-        if (dIsPressed)
-        {
-            currentRotation.z += Time.deltaTime * rotateSpeed;
-            transform.eulerAngles = currentRotation;
+        //    Debug.Log("s is pressed");
+        //}
+        //if (dIsPressed)
+        //{
+        //    currentRotation.z -= Time.deltaTime * rotateSpeed;
+        //    transform.eulerAngles = currentRotation;
 
-            currentPosition.x += Time.deltaTime * moveSpeed;
-            transform.position = currentPosition;
+        //    currentPosition.x += Time.deltaTime * moveSpeed;
+        //    transform.position = currentPosition;
 
-            Debug.Log("d is pressed");
-        }
+        //    Debug.Log("d is pressed");
+        //}
     }
 }
 
