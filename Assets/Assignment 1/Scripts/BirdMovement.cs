@@ -1,7 +1,12 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class BirdMovement : MonoBehaviour
 {
+    //public variable to see the position of my game object
+    public Vector3 position;
+    public Vector3 startPosition;
+
     //speed variables made public to adjust in the inspector
     public float xSpeed = 1f;
     public float ySpeed = 1f;
@@ -11,6 +16,12 @@ public class BirdMovement : MonoBehaviour
     public float xMax;
     public float yMin;
     public float yMax;
+    public float ySpawnMin = -3.5f;
+
+    public bool isLeft;
+    public bool isRight;
+    public bool isTop;
+    public bool isBottom;
 
     //camera variable to create border for game object
     public Camera gameCamera;
@@ -18,23 +29,23 @@ public class BirdMovement : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        Vector3 screenPosition = startPosition;
+        screenPosition.x = Random.Range(0, Screen.width);
+        screenPosition.y = ySpawnMin;
+        startPosition = Camera.main.ScreenToWorldPoint(screenPosition);
+        startPosition.z = 0f;
+        transform.position = startPosition;
+
+        isTop = true;
+        isLeft = true;
+        isRight = false;
+        isBottom = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //creates a variable that is declairs the initial position of the game object
-        Vector3 position = transform.position;
-
-        //Adds to the position every frame and the * variables allow me to adjust the speed in the inspector
-        position.x += Time.deltaTime * xSpeed;
-        position.y += Time.deltaTime * ySpeed;
-        position.z = 0f;
-
-        //Moves the game object this script is attached to
-        transform.position = position;
-
+        position = transform.position;
         //Creating the bouncing effect
         Vector3 screenPosition = gameCamera.WorldToScreenPoint(transform.position);
         
@@ -45,21 +56,48 @@ public class BirdMovement : MonoBehaviour
         float yMax = Screen.height;
 
         //conditionals to check if the game object has reached a condition every frame
-        if (screenPosition.x < xMin)
+        if (screenPosition.x <= xMin)
         {
-            xSpeed *= -1f;
+            isLeft = true;
+            isRight = false;
         }
-        if (screenPosition.x > xMax)
+        if (screenPosition.x >= xMax)
         {
-            xSpeed *= -1f;
+            isLeft = false;
+            isRight = true;
         }
-        if (screenPosition.y < yMin)
+        if (screenPosition.y <= yMin)
         {
-            ySpeed *= -1f;
+            isBottom = true;
+            isTop = false;
         }
-        if (screenPosition.y > yMax)
+        if (screenPosition.y >= yMax)
         {
-            ySpeed *= -1f;
+            isBottom = false;
+            isTop = true;
         }
+
+        if (isLeft == true)
+        {
+            position.x += Time.deltaTime * xSpeed;
+            position.z = 0f;
+        }
+        if (isRight == true)
+        {
+            position.x -= Time.deltaTime * xSpeed;
+            position.z = 0f;
+        }
+        if (isTop == true)
+        {
+            position.y -= Time.deltaTime * ySpeed;
+            position.z = 0f;
+        }
+        if (isBottom == true)
+        {
+            position.y += Time.deltaTime * ySpeed;
+            position.z = 0f;
+        }
+
+        transform.position = position;
     }
 }
