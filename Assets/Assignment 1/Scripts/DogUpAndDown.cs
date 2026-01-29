@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class DogUpAndDown : MonoBehaviour
@@ -19,6 +20,13 @@ public class DogUpAndDown : MonoBehaviour
     public bool isGoingDown = false;
     public bool isAtBottom = false;
 
+
+    public Transform startingPoint;
+    public Transform endingPoint;
+    public float progressMeter = 0;
+    public float movementSpeed;
+    public Vector3 output;
+
     //Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -34,9 +42,12 @@ public class DogUpAndDown : MonoBehaviour
         if (isGoingUp == true)
         {
             //moves the dog up if the dog is less than the max height it can go
-            if (dogPosition.y < maxHeight)
+            if (dogPosition.y <= maxHeight)
             {
-                dogPosition.y += Time.deltaTime * speed;
+                progressMeter += Time.deltaTime / movementSpeed;
+                output = Vector3.Lerp(startingPoint.position, endingPoint.position, progressMeter);
+                output.z = 0f;
+                dogPosition.y += output.y;
             }
             //starts a timer for when the dog does reach the top
             if (dogPosition.y > maxHeight)
@@ -55,9 +66,12 @@ public class DogUpAndDown : MonoBehaviour
         if (isGoingDown == true)
         {
             //Move the dog down if the dog's y position is greater than the minimumHeight value
-            if (dogPosition.y > minHeight)
-            { 
-                dogPosition.y -= Time.deltaTime * speed;
+            if (dogPosition.y >= minHeight)
+            {
+                progressMeter -= Time.deltaTime / movementSpeed;
+                output = Vector3.Lerp(startingPoint.position, endingPoint.position, progressMeter);
+                output.z = 0f;
+                dogPosition.y -= output.y;
             }
             //When the dog's position passes the minnimum height, start the timer 
             if (dogPosition.y < minHeight)
