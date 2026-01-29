@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class RotateHourHand : MonoBehaviour
 {
+    public float rotationSpeed;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -11,6 +13,8 @@ public class RotateHourHand : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        Vector3 rotatePosition = transform.eulerAngles;
+        rotatePosition.z += Time.deltaTime * rotationSpeed;
+        transform.eulerAngles = rotatePosition;
     }
 }
