@@ -691,6 +691,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1114307855}
+  - {fileID: 1715064252}
   - {fileID: 609853516}
   m_Father: {fileID: 286442850}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2486,7 +2487,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dogPosition: {x: 0, y: -4, z: 0}
-  speed: 1
+  speed: 0.5
   maxHeight: -0.5
   minHeight: -3.5
   timer: 0
@@ -3300,7 +3301,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1646240722
 Transform:
   m_ObjectHideFlags: 0
@@ -3441,12 +3442,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1715064251}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 287878634}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1744959627
 GameObject:
@@ -4496,4 +4497,3 @@ SceneRoots:
   - {fileID: 1482837344}
   - {fileID: 286442850}
   - {fileID: 1646240722}
-  - {fileID: 1715064252}
